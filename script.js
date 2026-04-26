@@ -1,31 +1,38 @@
-'use strict';
-
-const textArray = ["Yes", "No"]; // Array of options
-let currentIndex = 0;
-let textDisplay = document.getElementById('textDisplay');
-
-// Typewriter effect
-function typeWriter(text, i) {
-    if (i < text.length) {
-        textDisplay.innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(text, i + 1), 100);
-    } else {
-        setTimeout(() => deleteText(), 1000);
+// Typewriter effect function
+function typeWriter(element, text, delay) {
+    let i = 0;  
+    function write() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(write, delay);
+        }
     }
+    write();
 }
 
-// Delete text
-function deleteText() {
-    let text = textDisplay.innerHTML;
-
-    if (text.length > 0) {
-        textDisplay.innerHTML = text.substring(0, text.length - 1);
-        setTimeout(deleteText, 100);
-    } else {
-        currentIndex = (currentIndex + 1) % textArray.length;
-        typeWriter(textArray[currentIndex], 0);
-    }
+// Message display function
+function displayMessage() {
+    const messageElement = document.getElementById('message');
+    typeWriter(messageElement, 'Hello, Jannuu!', 100);
 }
 
-// Start typewriter effect
-typeWriter(textArray[currentIndex], 0);
+// Button interactions
+function setupButtons() {
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+
+    yesButton.addEventListener('click', function() {
+        alert('You clicked Yes!');
+    });
+
+    noButton.addEventListener('click', function() {
+        alert('You clicked No!');
+    });
+}
+
+// Initialize message display and button setup
+window.onload = function() {
+    displayMessage();
+    setupButtons();
+};
