@@ -1,43 +1,33 @@
-// Typewriter Effect
-function typeWriter(text, i, fnCallback) {
-    if (i < (text.length)) {
-        document.querySelector('.typewriter').innerHTML = text.substring(0, i + 1);
-        setTimeout(function() {
-            typeWriter(text, i + 1, fnCallback);
-        }, 50);
-    } else if (typeof fnCallback == 'function') {
-        fnCallback();
+const text = "Dear Jannnuu😘...";
+
+function typeWriter(element, text, delay) {
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, delay);
+        }
     }
+    type();
 }
 
-// Displaying a message after the typewriter effect
-function displayMessage() {
-    const message = 'Hello, welcome to our interactive experience!';
-    typeWriter(message, 0, function() {
-        document.querySelector('.message-box').style.display = 'block';
-    });
-}
+document.getElementById('enterButton').onclick = function() {
+    // Handle enter button click
+    const messageElement = document.getElementById('message');
+    typeWriter(messageElement, text, 100);
+};
 
-// Button functionality
-document.querySelector('.enterBtn').addEventListener('click', function() {
-    displayMessage();
-});
+document.getElementById('yesButton').onclick = function() {
+    // Handle yes button click
+    const audio = new Audio('path/to/music.mp3');
+    audio.play();
+};
 
-document.querySelector('.yesBtn').addEventListener('click', function() {
-    // Add functionality for Yes button here
-    console.log('You clicked Yes!');
-});
-
-document.querySelector('.noBtn').addEventListener('click', function() {
-    // Add functionality for No button here
-    console.log('You clicked No!');
-});
-
-// Choice Box functionality
-function showChoice() {
-    document.querySelector('.choiceBox').style.display = 'block';
-}
-
-// Music Playback
-const audio = new Audio('path/to/your/audio.mp3');
-audio.play();
+document.getElementById('noButton').onclick = function() {
+    // Handle no button click with run away effect
+    const element = document.getElementById('runAway');
+    element.style.transition = 'transform 0.5s';
+    element.style.transform = 'translateX(100vw)';
+    setTimeout(function() { element.style.display = 'none'; }, 600);
+};
