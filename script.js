@@ -1,38 +1,43 @@
-// Typewriter effect function
-function typeWriter(element, text, delay) {
-    let i = 0;  
-    function write() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(write, delay);
-        }
+// Typewriter Effect
+function typeWriter(text, i, fnCallback) {
+    if (i < (text.length)) {
+        document.querySelector('.typewriter').innerHTML = text.substring(0, i + 1);
+        setTimeout(function() {
+            typeWriter(text, i + 1, fnCallback);
+        }, 50);
+    } else if (typeof fnCallback == 'function') {
+        fnCallback();
     }
-    write();
 }
 
-// Message display function
+// Displaying a message after the typewriter effect
 function displayMessage() {
-    const messageElement = document.getElementById('message');
-    typeWriter(messageElement, 'Hello, Jannuu!', 100);
-}
-
-// Button interactions
-function setupButtons() {
-    const yesButton = document.getElementById('yesButton');
-    const noButton = document.getElementById('noButton');
-
-    yesButton.addEventListener('click', function() {
-        alert('You clicked Yes!');
-    });
-
-    noButton.addEventListener('click', function() {
-        alert('You clicked No!');
+    const message = 'Hello, welcome to our interactive experience!';
+    typeWriter(message, 0, function() {
+        document.querySelector('.message-box').style.display = 'block';
     });
 }
 
-// Initialize message display and button setup
-window.onload = function() {
+// Button functionality
+document.querySelector('.enterBtn').addEventListener('click', function() {
     displayMessage();
-    setupButtons();
-};
+});
+
+document.querySelector('.yesBtn').addEventListener('click', function() {
+    // Add functionality for Yes button here
+    console.log('You clicked Yes!');
+});
+
+document.querySelector('.noBtn').addEventListener('click', function() {
+    // Add functionality for No button here
+    console.log('You clicked No!');
+});
+
+// Choice Box functionality
+function showChoice() {
+    document.querySelector('.choiceBox').style.display = 'block';
+}
+
+// Music Playback
+const audio = new Audio('path/to/your/audio.mp3');
+audio.play();
